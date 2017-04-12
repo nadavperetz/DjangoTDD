@@ -5,7 +5,6 @@ from selenium.webdriver.common.keys import Keys
 
 
 class NewVisitorTest(unittest.TestCase):
-
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
@@ -39,10 +38,12 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys(Keys.ENTER)
 
         table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_element_by_tag_name('tr')
+        rows = table.find_elements_by_tag_name('tr')
+        print(rows)
 
         self.assertTrue(
-            any(row.text == '1: Buy peacock feathers' for row in rows)
+            any(row.text == '1: Buy peacock feathers' for row in rows),
+            "New to-do item did not appear in table"
         )
 
         # There is still a text box inviting her to add another item. She
@@ -60,6 +61,6 @@ class NewVisitorTest(unittest.TestCase):
 
         self.fail('Finish the test!')
 
+
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
-
